@@ -3,6 +3,7 @@ from User.Registration import Registration
 from User.User import User
 from HelperLibrary.Validator import Validator
 from HelperLibrary.Singleton import Singleton
+from Interface.UserCommandLineInterface import CLI as UserCLI
 
 
 class ExitMenuItem:
@@ -76,7 +77,7 @@ class LoginMenuItem:
 
             if logged_in_username is not None:
                 singleton = Singleton(logged_in_username)
-                # teacher_CLI(singleton).initiate()
+                UserCLI(singleton).initiate()
                 singleton.reset()
 
 
