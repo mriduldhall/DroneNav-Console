@@ -13,7 +13,7 @@ class Validator:
     def should_continue(self):
         while True:
             try:
-                print("You have entered the", self.type, "section.")
+                print("You have entered the", self.type, "menu.")
                 decision = AllowedValuesReconformation(
                     input("Do you want to continue?\nEnter 1 to continue or 0 to leave."))
             except ValueError:

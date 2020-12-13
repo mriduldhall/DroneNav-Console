@@ -1,6 +1,7 @@
 from HelperLibrary.Validator import Validator
 from Interface.SettingsCommandLineInterface import CLI as SettingsCLI
 from BookingSystem.Book import Book
+from BookingSystem.Information import Information
 
 
 class BookMenuItem:
@@ -42,10 +43,23 @@ class LogoutMenuItem:
         return self.is_exit_initiated
 
 
+class InformationMenuItem:
+    def __init__(self, singleton):
+        self.username = singleton.name
+
+    def execute(self):
+        if Validator("information").should_continue():
+            Information(self.username).execute()
+
+    def exit_initiated(self):
+        pass
+
+
 class CLI:
     def __init__(self, singleton):
         self.main_menu_dictionary = {
             "b": BookMenuItem(singleton),
+            "i": InformationMenuItem(singleton),
             "s": SettingsMenuItem(singleton),
             "l": LogoutMenuItem()
         }
@@ -53,7 +67,7 @@ class CLI:
     def initiate(self):
         exit_initiated = False
         while not exit_initiated:
-            choice = input("Enter b to book a drone, s for settings and l to logout:")
+            choice = input("Enter b to book a drone, i to get booking information, s for settings and l to logout:")
             menu_item = self.main_menu_dictionary.get(choice)
             if menu_item is None:
                 print("Please enter valid choice")

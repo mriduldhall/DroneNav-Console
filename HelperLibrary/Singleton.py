@@ -9,7 +9,7 @@ class Singleton:
 
     def __init__(self, name):
         if Singleton.__instance is not None:
-            raise Exception("This class is a singleton!")
+            raise Exception("This class is a username!")
         else:
             self.name = name
             Singleton.__instance = self.name
