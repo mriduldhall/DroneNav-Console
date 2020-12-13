@@ -1,37 +1,16 @@
 from HelperLibrary.Validator import Validator
 from Interface.SettingsCommandLineInterface import CLI as SettingsCLI
+from BookingSystem.Book import Book
 
 
-# class CreateMenuItem:
-#     def __init__(self):
-#         pass
-#
-#     def execute(self):
-#         if Validator("create").should_continue():
-#             continuation = True
-#             while continuation is True:
-#                 student = self.getstudentdetails()
-#                 message = Create().create(student)
-#                 print(message)
-#                 continuation = bool(int(input("Enter 1 to create another student and 0 to head back to main menu.")))
-#
-#     @staticmethod
-#     def exit_initiated():
-#         return False
-#
-#     @staticmethod
-#     def getstudentdetails():
-#         name = input("Enter student's name:").capitalize()
-#         age = input("Enter student's age:")
-#         year_group = input("Enter student's year group:")
-#         student = Student(name, age, year_group, teacher="admin")
-#         return student
 class BookMenuItem:
-    def __init__(self):
-        pass
+    def __init__(self, singleton):
+        self.singleton = singleton
 
     def execute(self):
-        pass
+        if Validator("book").should_continue():
+            result = Book(self.singleton.name).initiate_booking()
+            print(result)
 
     def exit_initiated(self):
         pass
@@ -66,7 +45,7 @@ class LogoutMenuItem:
 class CLI:
     def __init__(self, singleton):
         self.main_menu_dictionary = {
-            "b": BookMenuItem(),
+            "b": BookMenuItem(singleton),
             "s": SettingsMenuItem(singleton),
             "l": LogoutMenuItem()
         }
