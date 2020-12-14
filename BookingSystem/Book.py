@@ -77,6 +77,9 @@ class BookStore:
             highest_speed = (highest_speed[0])[1]
             speed = randint(lowest_speed, highest_speed)
         job_duration = distance/speed
+        run_speed = StorageFunctions("world_data").retrieve(["items"], ["Run speed"])
+        run_speed = (run_speed[0])[1]
+        job_duration = job_duration/run_speed
         return int(job_duration*60)
 
 
