@@ -20,7 +20,14 @@ class DeleteMenuItem:
         self.is_exit_initiated = False
 
     def execute(self):
-        confirm_continuation = bool(int(input("Enter 1 to delete your account and 0 to exit:")))
+        valid_input = False
+        while not valid_input:
+            try:
+                confirm_continuation = bool(int(input("Enter 1 to delete your account and 0 to exit:")))
+            except ValueError:
+                print("Not a valid input")
+            else:
+                valid_input = True
         if confirm_continuation:
             try_again = True
             while try_again:
@@ -43,7 +50,14 @@ class EditPasswordMenuItem:
         self.singleton = singleton
 
     def execute(self):
-        confirm_continuation = bool(int(input("Enter 1 to change your password and 0 to exit:")))
+        valid_input = False
+        while not valid_input:
+            try:
+                confirm_continuation = bool(int(input("Enter 1 to change your password and 0 to exit:")))
+            except ValueError:
+                print("Not a valid input")
+            else:
+                valid_input = True
         if confirm_continuation is True:
             try_again = True
             while try_again:

@@ -71,10 +71,24 @@ class LoginMenuItem:
                     logged_in_username = username
                 elif login_result == Login.does_not_exist:
                     print("Entered username does not exist")
-                    try_again = bool(int(input("Would you like to try again? Enter 1 to try again and 0 to exit.")))
+                    valid_input = False
+                    while not valid_input:
+                        try:
+                            try_again = bool(int(input("Would you like to try again? Enter 1 to try again and 0 to exit.")))
+                        except ValueError:
+                            print("Not a valid input")
+                        else:
+                            valid_input = True
                 else:
                     print("Incorrect username and/or password")
-                    try_again = bool(int(input("Would you like to try again? Enter 1 to try again and 0 to exit.")))
+                    valid_input = False
+                    while not valid_input:
+                        try:
+                            try_again = bool(int(input("Would you like to try again? Enter 1 to try again and 0 to exit.")))
+                        except ValueError:
+                            print("Not a valid input")
+                        else:
+                            valid_input = True
 
             if logged_in_username is not None:
                 singleton = Singleton(logged_in_username)
