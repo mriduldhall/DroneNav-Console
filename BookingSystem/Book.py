@@ -1,4 +1,4 @@
-import time
+from datetime import datetime, timedelta
 from random import randint
 
 from HelperLibrary.StorageFunctions import StorageFunctions
@@ -37,7 +37,7 @@ class BookStore:
             return None
         else:
             drone_data = available_drones[0]
-            drone = Drone(drone_data[0], drone_data[1], drone_data[2], drone_data[3], drone_data[4], drone_data[5], drone_data[6], drone_data[7], drone_data[8])
+            drone = Drone(drone_data[0], drone_data[1], drone_data[2], drone_data[3], drone_data[4], drone_data[5], drone_data[6], drone_data[7], drone_data[8], drone_data[9])
             return drone
 
     def assign_booking(self, drone, origin, destination, username):
@@ -52,27 +52,28 @@ class BookStore:
         else:
             route_data = StorageFunctions("routes").retrieve(["city_a", "city_b"], [destination_id, origin_id])
         route_id = (route_data[0])[0]
-        job_start_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+        job_start_time = datetime.now()
         job_duration = self._calculatejobduration((route_data[0])[1])
+        job_finish_time = job_start_time + timedelta(minutes=job_duration)
         assert origin_id == drone.location_id
-        StorageFunctions(self.table_name).update(["job", "user_id", "route_id", "job_start_time", "job_duration", "origin_id", "destination_id"], [True, user_id, route_id, job_start_time, job_duration, origin_id, destination_id], drone.id)
+        StorageFunctions(self.table_name).update(["job", "user_id", "route_id", "job_start_time", "job_duration", "job_finish_time", "origin_id", "destination_id"], [True, user_id, route_id, job_start_time, job_duration, job_finish_time, origin_id, destination_id], drone.id)
         return "Booking successful!\nYour drone's number is: " + str(drone.id)
 
     @staticmethod
     def _calculatejobduration(distance):
-        traffic_probability = StorageFunctions("world_data").retrieve(["Items"], ["Traffic probability"])
+        traffic_probability = StorageFunctions("world_data").retrieve(["items"], ["Traffic probability"])
         traffic_probability = (traffic_probability[0])[1]
         current_traffic = 100 - (randint(1, 100))
         if traffic_probability <= current_traffic:
-            lowest_speed = StorageFunctions("world_data").retrieve(["Items"], ["Drone lowest traffic speed"])
+            lowest_speed = StorageFunctions("world_data").retrieve(["items"], ["Drone lowest traffic speed"])
             lowest_speed = (lowest_speed[0])[1]
-            highest_speed = StorageFunctions("world_data").retrieve(["Items"], ["Drone highest traffic speed"])
+            highest_speed = StorageFunctions("world_data").retrieve(["items"], ["Drone highest traffic speed"])
             highest_speed = (highest_speed[0])[1]
             speed = randint(lowest_speed, highest_speed)
         else:
-            lowest_speed = StorageFunctions("world_data").retrieve(["Items"], ["Drone lowest speed"])
+            lowest_speed = StorageFunctions("world_data").retrieve(["items"], ["Drone lowest speed"])
             lowest_speed = (lowest_speed[0])[1]
-            highest_speed = StorageFunctions("world_data").retrieve(["Items"], ["Drone highest speed"])
+            highest_speed = StorageFunctions("world_data").retrieve(["items"], ["Drone highest speed"])
             highest_speed = (highest_speed[0])[1]
             speed = randint(lowest_speed, highest_speed)
         job_duration = distance/speed

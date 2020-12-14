@@ -15,9 +15,9 @@ class Information:
             print("You have booked:")
             counter = 1
             for booked_data in drones_data:
-                origin_data = StorageFunctions("locations").retrieve(["id"], [booked_data[7]])
+                origin_data = StorageFunctions("locations").retrieve(["id"], [booked_data[8]])
                 origin = (origin_data[0])[1]
-                destination_data = StorageFunctions("locations").retrieve(["id"], [booked_data[8]])
+                destination_data = StorageFunctions("locations").retrieve(["id"], [booked_data[9]])
                 destination = (destination_data[0])[1]
                 print(counter, ": Drone number - ", booked_data[0], ", from ", origin, " to ", destination, sep='')
                 counter += 1
