@@ -3,6 +3,7 @@ from User.Registration import Registration
 from User.User import User
 from HelperLibrary.Validator import Validator
 from HelperLibrary.Singleton import Singleton
+from HelperLibrary.SlowPrint import slowprint
 from Interface.UserCommandLineInterface import CLI as UserCLI
 
 
@@ -88,8 +89,13 @@ class InformationMenuItem:
 
     @staticmethod
     def execute():
-        print("Currently no information available")
-        return False
+        slowprint("DroneNav is a proof of concept app of a drone booking system based on the future of travel.\n")
+        slowprint("It allows user to book drones for their travel(currently limited to the United Kingdom) for the proof of concept version.\n")
+        slowprint("To emulate other users and other real world processes jobs are automatically produced for drones and speed varies for each journey.\n")
+        slowprint("A drone's speed might be even slower to emulate traffic.\n")
+        slowprint("Thank you for trying out DroneNav.\n")
+        slowprint("""Group = ['Mridul', 'Ifaz', 'Harsh', 'Tajveer']\n""")
+        slowprint("As part of the ŠŦ£∑ competition.\n")
 
     @staticmethod
     def exit_initiated():
