@@ -1,7 +1,7 @@
-import time
+# import time
 
 
 def slowprint(string):
     for letter in string:
         print(letter, end='')
-        time.sleep(.05)
+        # time.sleep(.05)

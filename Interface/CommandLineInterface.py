@@ -14,7 +14,8 @@ class ExitMenuItem:
 
     def execute(self):
         print("Exiting...")
-        self.is_exit_initiated = True
+        print("Exit has been disabled to prevent issues with the script when someone else logs in.")
+        self.is_exit_initiated = False
 
     def exit_initiated(self):
         return self.is_exit_initiated
